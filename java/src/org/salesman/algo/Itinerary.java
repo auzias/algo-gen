@@ -1,7 +1,7 @@
 package org.salesman.algo;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 import org.salesman.entity.Town;
@@ -69,31 +69,12 @@ public class Itinerary {
 		}
 	}
 
-	private Collection<? extends Town> subList(int i, int j) {
-		return this.itinerary.subList(i, j);
-	}
-
 	public void mutate() {
-		int indexA = new Random().nextInt(this.itinerary.size()-1);
-		int indexB = 0;
-		do {
-			indexB = new Random().nextInt(this.itinerary.size()-1);
-		} while(indexB == indexA);
+		int indexA = new Random().nextInt(this.itinerary.size());
+		int indexB = new Random().nextInt(this.itinerary.size());
 
-		Town townA = this.itinerary.get(indexA);
-		Town townB = this.itinerary.get(indexB);
-
-		if(indexA < indexB) {
-			this.itinerary.remove(indexB);
-			this.itinerary.remove(indexA);
-		} else {
-			this.itinerary.remove(indexA);
-			this.itinerary.remove(indexB);			
-		}
-
-		this.itinerary.add(indexB, townA);
-		this.itinerary.add(indexA, townB);
-
+		Collections.swap(this.itinerary, indexA, indexB);
+		
 		this.updateCost();
 
 	}
