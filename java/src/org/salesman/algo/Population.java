@@ -45,7 +45,7 @@ public class Population {
 			}
 		}while(i < numberOfTowns);
 
-		this.validate();
+		//this.validate();
 		return itinerary;
 	}
 
@@ -70,15 +70,15 @@ public class Population {
 		int selected = 1 + new Random().nextInt(this.itineraries.get(0).size()-1);
 
 		this.selection(selected);
-		this.validate();
+		//this.validate();
 		if (this.verbose) System.out.println("Selection \t min: " + this.getMin());
 
 		this.reproduction(selected);
-		this.validate();
+		//this.validate();
 		if (this.verbose) System.out.println("Reproduction \t min: " + this.getMin());
 
 		this.mutation();
-		this.validate();
+		//this.validate();
 		if (this.verbose) System.out.println("Mutation \t min: " + this.getMin());
 	}
 
