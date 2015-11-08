@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./website/img/fav.ico">
+    <title>Maël Auzias' teaching website</title>
+    <link href="./website/css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://www.auzias.net">Algorithmes génétiques</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Algorithmes génétiques</h1>
+        <p class="lead">
+          Tous les détails du TP se trouvent sur cette page.<br/>
+	        Si jamais une information est manquante envoyer un mail à<br>
+          <u>teaching<small> [at] </small>auzias<small> [dot] </small>net</u>
+        </p>
+      </div>
+
+    <h2>Introduction</h2>
+    <ul>
+      <li><a href="./expectations/slides.odp">Slides de présentation</a></li>
+    </ul>
+    <p>
+      Un voyageur de commerce désire visiter <em>n</em> villes une seule fois puis retourner au point de départ. Différentes méthodes existent pour trouver un trajet étant peu couteux, mais pour trouver <b>la</b> meilleure solution,
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mfrac>
+      <mn>(n-1)!</mn>
+      <mi>2</mi>
+      </mfrac>
+      </math> solutions doivent être produites et comparées. C'est problème d'explosion combinatoire. Pour résoudre le projet du voyageur et trouver <b>rapidement</b> une <b>très bonne solution</b> les algorithmes génétiques peuvent être utilisés.
+    </p>
+
+    <h2>Architecture de fichiers</h2>
+    <p><p>
+    <ul>
+      <li>src</li>
+        <ul>
+          <li>main.c</li>
+          <li><u>main-test.c</u></li>
+          <li>algo.c</li>
+          <li>algo.h</li>
+        </ul>
+      <li>rsc</li>
+        <ul>
+          <li><u>villes.dat</u></li>
+          <li><u>carte_france_ville.jpg</u></li>
+        </ul>
+      <li>doc</li>
+        <ul>
+          <li><b>rapport.pdf</b></li>
+        </ul>
+      <li><u>Makefile</u></li>
+      <li><u>projet-test.bin</u></li>
+      <li>projet.bin</li>
+      <li>README.md</li>
+    </ul>
+
+
+    <h2>Résolution du problème du voyageur de commerce</h2>
+    <h3>Données de départ</h3>
+    <p>
+      Grâce au fichier <a href="./expectations/villes.dat">villes.dat</a> générer les tableaux suivants:
+    <p>
+    <ul>
+      <li><font color="blue">String[] nomsVilles</font>: un tableau de taille <em>n</em> contenant les noms des villes</li>
+      <li><font color="blue">int[][] coordonnees</font>: un tableau de taille <em>n&times;2</em> contenant les coordonnées des villes</li>
+      <li><font color="blue">int[][] distances</font>: un tableau de taille <em>n&times;n</em> contenant les distances entre les villes deux à deux.</li>
+      <li><font color="blue">int[] itineraire</font>: (individus) un tableau de taille <em>n</em> contenant une solution possible.</li>
+      <li><font color="blue">int[][] population</font>: (ensemble d'individus) un tableau de taille <em>m&times;n</em>, <em>m</em> est le nombre d'individus de la population.</li>
+    </ul>
+
+    <h3>Genèse</h3>
+    <p>
+      La création de la population initiale se fait de façon aléatoire. Le tableau <em>population</em> est créé et initialisé en remplissant <em>m</em> itinéraires avec des entiers générés de façon aléatoire <em>(cf. $ man 3 rand)</em>.<br>
+      Rappel: <b>chaque ville doit présente une seule fois dans chaque itinéraire</b>.
+    <p>
+
+    <h3>Adaptation et sélection</h3>
+    <p>
+      L'adaptation d'un individu est définie par le coût d'un itinéraire. Plus un itinéraire est long, moins il est adapté. Le meilleur individu est l'itinéraire le plus court.
+    <p>
+    <p>
+      La sélection consiste simplement à placer au début du tableau <em>population</em> les itinéraires les plus courts. Il est inutile (et coûteux) de trier entièrement le tableau.<br>
+      Pour cela, on choisit un itinéraire au hasard (appelé <em>pivot</em>), et on déplace en début de tableau tous les itinéraires plus courts que le <em>pivot</em>, puis on place le <em>pivot</em> à sa place dans le tableau.
+    <p>
+
+    <h3>Reproduction</h3>
+    <p>
+      L'étape de reproduction consiste à remplacer tous les individus placés après le pivot
+    par de nouveaux individus obtenus par croisement des individus les pieux adaptés (ceux placés
+    avant le <em>pivot</em>). Le croisement de deux individus a pour objectif de créer un nouvel
+    individu possédant une partie des caractéristiques de ses deux <em>parents</em>. Pour croiser
+    deux individus, on procédera ainsi&nbsp;
+    <ul>
+    <li>On choisit de façon aléatoire une <em>point de rupture</em> (entier représentant
+    un indice du tableau <em>itineraire</em>)</li>
+    <li>On recopie tous les éléments d'un des parents dans le tableau <em>enfant</em>
+    jusqu'au point de rupture</li>
+    <li>On recopie ensuite les éléments de l'autre parent, à partir du point de
+    rupture, s'ils ne sont pas déjà dans le tableau <em>enfant</em></li>
+    </ul>
+
+    <p><em>Exemple</em>&nbsp;: croisement des tableaux <em>pere</em> et <em>mere</em> pour
+    obtenir le tableau <em>fils</em>. Le <em>point de rupture</em> est 4.
+
+    <table cellpadding="10"><tr>
+    <td><table border = "1">
+    <caption><font color="blue">pere</font></caption>
+    <tr><td>&nbsp;<font color="blue">1</font>&nbsp;</td><td>&nbsp;<font color="blue">2</font>&nbsp;</td>
+    <td>&nbsp;<font color="blue">3</font>&nbsp;</td><td>&nbsp;<font color="blue">4</font>&nbsp;</td>
+    <td>&nbsp;5&nbsp;</td><td>&nbsp;6&nbsp;</td><td>&nbsp;7&nbsp;</td><td>&nbsp;8&nbsp;</td><td>&nbsp;9&nbsp;</td></tr>
+    </table></td>
+    <td rowspan="2"><table border = "1">
+    <caption><font color="blue">fils</font></caption>
+    <tr><td>&nbsp;<font color="blue">1</font>&nbsp;</td><td>&nbsp;<font color="blue">2</font>&nbsp;</td>
+    <td>&nbsp;<font color="blue">3</font>&nbsp;</td><td>&nbsp;<font color="blue">4</font>&nbsp;</td>
+    <td>&nbsp;<font color="green">6</font>&nbsp;</td><td>&nbsp;<font color="green">9</font>&nbsp;</td>
+    <td>&nbsp;<font color="green">8</font>&nbsp;</td><td>&nbsp;<font color="green">5</font>&nbsp;</td>
+    <td>&nbsp;<font color="green">7</font>&nbsp;</td></tr>
+    </table></td>
+    </tr><tr>
+    <td><table border = "1">
+    <caption><font color="blue">mere</font></caption>
+    <tr><td>&nbsp;4&nbsp;</td><td>&nbsp;1&nbsp;</td><td>&nbsp;<font color="green">6</font>&nbsp;</td><td>&nbsp;3&nbsp;</td>
+    <td>&nbsp;<font color="green">9</font>&nbsp;</td><td>&nbsp;<font color="green">8</font>&nbsp;</td><td>&nbsp;2&nbsp;</td>
+    <td>&nbsp;<font color="green">5</font>&nbsp;</td><td>&nbsp;<font color="green">7</font>&nbsp;</td></tr>
+    </table></td>
+    </tr></table>
+
+    <!----------------------------------------------------------------------------->
+    <h3>Mutation</h3>
+
+    Certains itinéraires, choisis de façon aléatoire, subissent une mutation. La
+    mutation consiste à permuter deux de ses éléments choisis de façon aléatoire.
+
+    <p><em>Exemple</em>&nbsp;: mutation d'un tableau par permutation de deux de ses éléments.
+    <table cellpadding="10"><tr>
+    <td><table border = "1">
+    <caption><em>avant mutation</em></caption>
+    <tr><td>&nbsp;1&nbsp;</td><td>&nbsp;<font color="green">2</font>&nbsp;</td><td>&nbsp;3&nbsp;</td><td>&nbsp;4&nbsp;</td>
+    <td>&nbsp;5&nbsp;</td><td>&nbsp;6&nbsp;</td><td>&nbsp;<font color="green">7</font>&nbsp;</td><td>&nbsp;8&nbsp;</td><td>&nbsp;9&nbsp;</td></tr>
+    </table></td>
+    <td><table border = "1">
+    <caption><em>après mutation</em></caption>
+    <tr><td>&nbsp;1&nbsp;</td><td>&nbsp;<font color="green">7</font>&nbsp;</td><td>&nbsp;3&nbsp;</td><td>&nbsp;4&nbsp;</td>
+    <td>&nbsp;5&nbsp;</td><td>&nbsp;6&nbsp;</td><td>&nbsp;<font color="green">2</font>&nbsp;</td><td>&nbsp;8&nbsp;</td><td>&nbsp;9&nbsp;</td></tr>
+    </table></td>
+    </tr></table>
+
+    <!----------------------------------------------------------------------------->
+    <h3>Présentation de la solution</h3>
+    <p>
+      Au bout de <em>p</em> générations (<em>p</em> est un paramètre de l'algorithme),
+    on arrête l'évolution et on choisit le meilleur élément de la dernière population
+    obtenue. Les noms des villes de l'itinéraire séléctionné et sa longueur sont affichés.
+    <p>
+    <p>
+      Une version plus élaborée du programme pourra générer une image représentant
+    la carte de France sur laquelle l'itinéraire obtenu est représenté sous forme de
+    segments entre les villes successives.
+    <p>
+
+    </div><!-- /.container -->
+  </body>
+</html>
