@@ -6,3 +6,4 @@ void genese (int population_size, int population[population_size][NUMBER_OF_TOWN
 void adaptation_and_selection (int population_size, int population[population_size][NUMBER_OF_TOWNS]);
 void reproduction (int population_size, int population[population_size][NUMBER_OF_TOWNS]);
 void mutation (int population_size, int population[population_size][NUMBER_OF_TOWNS]);
+void display_best (int population_size, int population[population_size][NUMBER_OF_TOWNS]);
