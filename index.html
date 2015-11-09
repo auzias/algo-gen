@@ -33,7 +33,7 @@
 
     <h2>Introduction</h2>
     <ul>
-      <li><a href="./expectations/slides.odp">Slides de présentation</a></li>
+      <li><a href="./slides.odp">Slides de présentation</a></li>
     </ul>
     <p>
       Un voyageur de commerce désire visiter <em>n</em> villes une seule fois puis retourner au point de départ. Différentes méthodes existent pour trouver un trajet étant peu couteux, mais pour trouver <b>la</b> meilleure solution,
@@ -45,13 +45,33 @@
       </math> solutions doivent être produites et comparées. C'est problème d'explosion combinatoire. Pour résoudre le projet du voyageur et trouver <b>rapidement</b> une <b>très bonne solution</b> les algorithmes génétiques peuvent être utilisés.
     </p>
 
+    <h2>Travail attendu</h2>
+    <p>
+        Une archive au format .zip ou .tar.gz contentant l'achitecture de fichiers complétée doit être envoyée à <u>teaching<small> [at] </small>auzias<small> [dot] </small>net</u> avec comme objet "[ALGO-GEN] _nom-étudiant1 _nom-étudiant2" le 2015-12-11 à 23h59 au plus tard. Tout retard sera sanctionné.
+        <br>
+        Le <b>rapport</b> devra contenir une très brève description du problème, une description de la méthodologie générale (sans faire de copier/coller des l'explications de cette page) et une explication détaillée de chaque fonctions concernant les agorithmes. Du <b>pseudo</b>-code pourra être présent dans le rapport (à mettre en annexe si le rapport dépasse 15 pages). Le rapport ne doit pas faire plus de 15 pages. Vous commenterez aussi une exécution et sa sortie, n'hésitez pas à afficher différent types de données (i.e., coût min/max de la population) à chaque étape.
+        <br>
+        Le code doit être clair et commenté. Il <b>doit</b> compilé et pouvoir s'exécuter en affichant un message d'erreur si le nombre de paramètres est incorrect.
+    <p>
+    <p>Points bonus:</p>
+    <ul>
+        <li>Genèse réappropriée (lecture des fichiers)</li>
+        <li>Probabilité d'avoir une mutation en paramètre</li>
+        <li>Création d'un fichier image avec itinéraire dessiné.</li>
+    </ul>
+
     <h2>Architecture de fichiers</h2>
-    <p><p>
+    <p>
+      <a href="tp.zip">Architecture de départ</a><br>
+      Les fichiers soulignés sont fournis, les autres sont à produire ou compléter (en particulier <b>rapport.pdf</b>).
+    <p>
     <ul>
       <li>src</li>
         <ul>
-          <li>main.c</li>
           <li><u>main-test.c</u></li>
+          <li><u>util.h</u></li>
+          <li><u>util.c</u></li>
+          <li>main.c</li>
           <li>algo.c</li>
           <li>algo.h</li>
         </ul>
@@ -66,6 +86,7 @@
         </ul>
       <li><u>Makefile</u></li>
       <li><u>projet-test.bin</u></li>
+      <li><u>projet.bin</u></li>
       <li>projet.bin</li>
       <li>README.md</li>
     </ul>
@@ -74,7 +95,7 @@
     <h2>Résolution du problème du voyageur de commerce</h2>
     <h3>Données de départ</h3>
     <p>
-      Grâce au fichier <a href="./expectations/villes.dat">villes.dat</a> générer les tableaux suivants:
+      Grâce au fichier villes.dat générer les tableaux suivants:
     <p>
     <ul>
       <li><font color="blue">String[] nomsVilles</font>: un tableau de taille <em>n</em> contenant les noms des villes</li>
@@ -107,16 +128,15 @@
     individu possédant une partie des caractéristiques de ses deux <em>parents</em>. Pour croiser
     deux individus, on procédera ainsi&nbsp;
     <ul>
-    <li>On choisit de façon aléatoire une <em>point de rupture</em> (entier représentant
+    <li>On choisit de façon aléatoire un <em>point de rupture</em> (entier représentant
     un indice du tableau <em>itineraire</em>)</li>
     <li>On recopie tous les éléments d'un des parents dans le tableau <em>enfant</em>
     jusqu'au point de rupture</li>
-    <li>On recopie ensuite les éléments de l'autre parent, à partir du point de
-    rupture, s'ils ne sont pas déjà dans le tableau <em>enfant</em></li>
+    <li>On recopie ensuite les éléments de l'autre parent qui ne sont pas déjà dans le tableau <em>enfant</em></li>
     </ul>
 
     <p><em>Exemple</em>&nbsp;: croisement des tableaux <em>pere</em> et <em>mere</em> pour
-    obtenir le tableau <em>fils</em>. Le <em>point de rupture</em> est 4.
+    obtenir le tableau <em>fils</em>. Le <em>point de rupture</em> est 3.
 
     <table cellpadding="10"><tr>
     <td><table border = "1">
@@ -142,7 +162,6 @@
     </table></td>
     </tr></table>
 
-    <!----------------------------------------------------------------------------->
     <h3>Mutation</h3>
 
     Certains itinéraires, choisis de façon aléatoire, subissent une mutation. La
@@ -162,7 +181,6 @@
     </table></td>
     </tr></table>
 
-    <!----------------------------------------------------------------------------->
     <h3>Présentation de la solution</h3>
     <p>
       Au bout de <em>p</em> générations (<em>p</em> est un paramètre de l'algorithme),
