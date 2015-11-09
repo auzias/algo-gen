@@ -1,6 +1,9 @@
 package org.salesman;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.salesman.algo.Population;
 import org.salesman.entity.Towns;
 
@@ -16,22 +19,21 @@ public class Entrypoint {
 			System.exit(-1);
 		}
 		
-		double min = 10000;
-		long iteration = 10000000;
-		for(long i = 0; i < iteration; i++) {
-			Population a = new Population(1000, false);
-			a.genesis(towns);
-			a.selectionAndReproductionAndMutation();
-			a.selectionAndReproductionAndMutation();
-			a.selectionAndReproductionAndMutation();
-			a.selectionAndReproductionAndMutation();
-			
-			if ((a.getMin() < min)) {
-				min = a.getMin();
-				System.out.println(min + "[" + i + "] : " + a.getItineraryWithCost(min));
-			}
+		
+
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+		
+		long exp = 1000;
+		long iteration = 100;
+		int numberOfThread = 50;
+		for(int thread = 0; thread < numberOfThread; thread++, iteration*=2) {
+			Experience e = new Experience(exp, iteration, towns, thread);
+			Thread t = new Thread(e);
+			executor.execute(t);
 		}
-		System.out.println("done");
+        executor.shutdown();
+        while (!executor.isTerminated());
+        System.out.println("Finished all threads");
 	}
 
 }
