@@ -42,7 +42,7 @@
       <mn>(n-1)!</mn>
       <mi>2</mi>
       </mfrac>
-      </math> solutions doivent être produites et comparées. C'est problème d'explosion combinatoire. Pour résoudre le projet du voyageur et trouver <b>rapidement</b> une <b>très bonne solution</b> les algorithmes génétiques peuvent être utilisés.
+  </math> solutions doivent être produites et comparées. C'est un problème d'explosion combinatoire. Pour résoudre le projet du voyageur et trouver <b>rapidement</b> une <b>très bonne solution</b> les algorithmes génétiques peuvent être utilisés.
     </p>
 
     <h2>Travail attendu</h2>
@@ -51,7 +51,7 @@
         <br>
         Le <b>rapport</b> devra contenir une très brève description du problème, une description de la méthodologie générale (sans faire de copier/coller des l'explications de cette page) et une explication détaillée de chaque fonctions concernant les agorithmes. Du <b>pseudo</b>-code pourra être présent dans le rapport (à mettre en annexe si le rapport dépasse 15 pages). Le rapport ne doit pas faire plus de 15 pages. Vous commenterez aussi une exécution et sa sortie, n'hésitez pas à afficher différent types de données (i.e., coût min/max de la population) à chaque étape.
         <br>
-        Le code doit être clair et commenté. Il <b>doit</b> compilé et pouvoir s'exécuter en affichant un message d'erreur si le nombre de paramètres est incorrect.
+        Le code doit être clair et commenté. Il <b>doit</b> compiler et pouvoir s'exécuter en affichant un message d'erreur si le nombre de paramètres est incorrect.
     <p>
     <p>Points bonus:</p>
     <ul>
@@ -108,7 +108,7 @@
     <h3>Genèse</h3>
     <p>
       La création de la population initiale se fait de façon aléatoire. Le tableau <em>population</em> est créé et initialisé en remplissant <em>m</em> itinéraires avec des entiers générés de façon aléatoire <em>(cf. $ man 3 rand)</em>.<br>
-      Rappel: <b>chaque ville doit présente une seule fois dans chaque itinéraire</b>.
+      Rappel: <b>chaque ville doit être présente une seule fois dans chaque itinéraire</b>.
     <p>
 
     <h3>Adaptation et sélection</h3>
@@ -123,7 +123,7 @@
     <h3>Reproduction</h3>
     <p>
       L'étape de reproduction consiste à remplacer tous les individus placés après le pivot
-    par de nouveaux individus obtenus par croisement des individus les pieux adaptés (ceux placés
+    par de nouveaux individus obtenus par croisement des individus les mieux adaptés (ceux placés
     avant le <em>pivot</em>). Le croisement de deux individus a pour objectif de créer un nouvel
     individu possédant une partie des caractéristiques de ses deux <em>parents</em>. Pour croiser
     deux individus, on procédera ainsi&nbsp;
