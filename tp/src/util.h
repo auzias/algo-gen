@@ -6,6 +6,10 @@
 #define START_MSG_SIZE    256
 #define LONGEST_NAME      16
 #define NUMBER_OF_TOWNS   45
+#define ARG_POP_SIZE      1
+#define ARG_NUM_GEN       2
+#define EXPECTED_ARG_NUM  3
+
 // Errors:
 #define ERR_USAGE        -1
 #define ERR_OPEN_FILE    -2
