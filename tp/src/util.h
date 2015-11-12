@@ -9,6 +9,7 @@
 #define ARG_POP_SIZE      1
 #define ARG_NUM_GEN       2
 #define EXPECTED_ARG_NUM  3
+#define X_Y               2
 
 // Errors:
 #define ERR_USAGE        -1

@@ -48,11 +48,13 @@ void display_best (int population_size,
                    int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS],
                    char** town_names)
 {
+    //Example of implementation
     double cost = 3.14159265358979323846264338327950288419716939937510582097;
-    printf("Best is (%0.1f):", cost);
+    printf("Best is (%0.1f): ", cost);
     for(int i = 0; i < NUMBER_OF_TOWNS; i++) {
-        printf("-");
+        printf("%d ", i);
     }
+    putchar('\n');
 }
 
 /**

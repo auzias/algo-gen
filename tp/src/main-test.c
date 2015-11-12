@@ -19,18 +19,17 @@ int main (int argc, char *argv[])
       sprintf (start_msg, "The experience start. The population will have %d individuals and will run over %d generations.", population_size, number_of_generations);
       message (start_msg);
     }
+    free (start_msg);
 
     // Generate the town_names array
-    char** town_names[NUMBER_OF_TOWNS][LONGEST_NAME] = (char**) calloc (NUMBER_OF_TOWNS, LONGEST_NAME * sizeof (char));
+    char** town_names = (char**) calloc (NUMBER_OF_TOWNS, LONGEST_NAME * sizeof (char));
     fill_names (town_names);
     // Generate the coordinates array
-    int coordinates[NUMBER_OF_TOWNS][2];
+    int coordinates[NUMBER_OF_TOWNS][X_Y];
     fill_coordinates (coordinates);
     // Generate the distances array
     int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS];
     fill_distances (distances);
-    for(int i = 0; i < 6; i++)
-        printf ("%d\n", distances[i][0]);
 
     // Generate the first generation
     int population[population_size][NUMBER_OF_TOWNS];
@@ -38,14 +37,16 @@ int main (int argc, char *argv[])
 
     for (int generation = 0; generation < number_of_generations; generation++)
     {
-      adaptation_and_selection (population_size, population, distances);
-      reproduction (population_size, population, distances);
-      mutation (population_size, population, distances);
+        adaptation_and_selection (population_size, population, distances);
+        reproduction (population_size, population, distances);
+        mutation (population_size, population, distances);
+        if (DEBUG) {
+            display_best (population_size, population, distances, town_names);
+        }
     }
 
     display_best (population_size, population, distances, town_names);
 
     message ("Experience finished");
-    free (start_msg);
     return SUCCESS;
 }
