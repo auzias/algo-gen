@@ -11,6 +11,7 @@
 #define EXPECTED_ARG_NUM  3
 #define X_Y               2
 #define MUTATION_PROB     50
+#define MUTATION_PROB_MAX 100
 
 // Errors:
 #define ERR_USAGE        -1
