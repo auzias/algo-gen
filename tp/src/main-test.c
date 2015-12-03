@@ -18,8 +18,8 @@ int main (int argc, char *argv[])
       start_msg = (char*) malloc (START_MSG_SIZE * sizeof(char));
       sprintf (start_msg, "The experience start. The population will have %d individuals and will run over %d generations.", population_size, number_of_generations);
       message (start_msg);
+      free (start_msg);
     }
-    free (start_msg);
 
     // Generate the town_names array
     char** town_names = (char**) calloc (NUMBER_OF_TOWNS, LONGEST_NAME * sizeof (char));
@@ -34,13 +34,13 @@ int main (int argc, char *argv[])
 
     // Generate the distances array
     int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS];
-    fill_distances (population_size, coordinates, distances);
+    fill_distances (coordinates, distances);
 
     for (int generation = 0; generation < number_of_generations; generation++)
     {
         int pivot = adaptation_and_selection (population_size, population, distances);
         reproduction (population_size, population, distances, pivot);
-        mutation (population_size, population, distances);
+        mutation (population_size, population, distances, MUTATION_PROB);
         if (DEBUG) {
             display_best (population_size, population, distances, town_names);
         }
