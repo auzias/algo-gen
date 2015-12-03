@@ -10,6 +10,7 @@
 #define ARG_NUM_GEN       2
 #define EXPECTED_ARG_NUM  3
 #define X_Y               2
+#define MUTATION_PROB     50
 
 // Errors:
 #define ERR_USAGE        -1
