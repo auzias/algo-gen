@@ -27,13 +27,14 @@ int main (int argc, char *argv[])
     // Generate the coordinates array
     int coordinates[NUMBER_OF_TOWNS][X_Y];
     fill_coordinates (coordinates);
-    // Generate the distances array
-    int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS];
-    fill_distances (distances);
 
     // Generate the first generation
     int population[population_size][NUMBER_OF_TOWNS];
     genese (population_size, population);
+
+    // Generate the distances array
+    int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS];
+    fill_distances (population_size, population, distances);
 
     for (int generation = 0; generation < number_of_generations; generation++)
     {
