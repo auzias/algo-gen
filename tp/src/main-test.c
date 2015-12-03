@@ -38,8 +38,8 @@ int main (int argc, char *argv[])
 
     for (int generation = 0; generation < number_of_generations; generation++)
     {
-        adaptation_and_selection (population_size, population, distances);
-        reproduction (population_size, population, distances);
+        int pivot = adaptation_and_selection (population_size, population, distances);
+        reproduction (population_size, population, distances, pivot);
         mutation (population_size, population, distances);
         if (DEBUG) {
             display_best (population_size, population, distances, town_names);

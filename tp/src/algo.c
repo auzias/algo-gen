@@ -13,11 +13,13 @@ void genese (int population_size, int population[population_size][NUMBER_OF_TOWN
 /**
  *
  */
- void adaptation_and_selection (int population_size,
+int adaptation_and_selection (int population_size,
                                 int population[population_size][NUMBER_OF_TOWNS],
                                 int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS])
 {
+    int pivot = 0; //TODO: à modifier
 
+    return pivot;
 }
 
 /**
@@ -25,7 +27,8 @@ void genese (int population_size, int population[population_size][NUMBER_OF_TOWN
  */
 void reproduction (int population_size,
                    int population[population_size][NUMBER_OF_TOWNS],
-                   int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS])
+                   int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS],
+		   int pivot)
 {
 
 }
