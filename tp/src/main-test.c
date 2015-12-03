@@ -34,7 +34,7 @@ int main (int argc, char *argv[])
 
     // Generate the distances array
     int distances[NUMBER_OF_TOWNS][NUMBER_OF_TOWNS];
-    fill_distances (population_size, population, distances);
+    fill_distances (population_size, coordinates, distances);
 
     for (int generation = 0; generation < number_of_generations; generation++)
     {
