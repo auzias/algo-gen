@@ -45,9 +45,9 @@ int main (int argc, char *argv[])
             display_best (population_size, population, distances, town_names);
         }
     }
-
-    display_best (population_size, population, distances, town_names);
-
-    message ("Experience finished");
+    if (DEBUG) {
+        display_best (population_size, population, distances, town_names);
+        message ("Experience finished");
+    }
     return SUCCESS;
 }

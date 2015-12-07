@@ -32,7 +32,11 @@ info "Calculate the sha512sum"
 SHA512SUM_CALCULATED=$(sha512sum Makefile | cut -d " " -f 1)
 
 [[ $SHA512SUM_ORIGIN = $SHA512SUM_CALCULATED ]] && success "Makefile ok" || err "Makefile modified. Exiting"
+
+info "Set DEBUG to 0 -- as I asked you to do (so the execution is faster as there should not be any printf() execution)"
+sed -i 's/#define\( *\)DEBUG\( *\)1/#define DEBUG 0/g' ./src/util.h
+
 info "Clear the binaries (that should not be here) and produce them using the source code"
 make clean && make test && success "Compilation ok" || err "Error(s) in compilation. Exiting"
 
-time ./projet-test.bin $POPULATION_SIZE $GENERATION > /dev/null
+time ./projet-test.bin $POPULATION_SIZE $GENERATION
