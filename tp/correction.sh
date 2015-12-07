@@ -18,6 +18,14 @@ function success() {
     echo -e "$SUCCESS $1 $NC"
 }
 
+function integrity() {
+    SHA512SUM_ORIGIN="$1"
+    FILE="$2"
+    info "Calculate the sha512sum of the $FILE"
+    SHA512SUM_CALCULATED=$(sha512sum $FILE | cut -d " " -f 1)
+    [[ $SHA512SUM_ORIGIN = $SHA512SUM_CALCULATED ]] && success "$FILE ok" || err "$FILE modified. Exiting"
+}
+
 # tar your directory using the command: `tar cf tp.tar tp` (`man tar` will give you all the details)
 # by naming the file as follow: "student1name_student2name.tar"
 
@@ -26,12 +34,13 @@ info "Uncompress"
 tar xf tp.tar && success "Archive uncompressed" || err "Cannot read (or find) file"
 cd tp
 
-# `sha512sum Makefile` of the unmodified Makefile output $SHA512SUM.
-SHA512SUM_ORIGIN="b42c647fe48a148788dba6241fd5edc8b493260b7fefa0ab56d488026fcb2d71b73d285226e8101f40ecf810773fab4e92c1039caf26b7dd782129c157cb91ee"
-info "Calculate the sha512sum"
-SHA512SUM_CALCULATED=$(sha512sum Makefile | cut -d " " -f 1)
+# Check the integrity of the files: `sha512sum Makefile` of the unmodified Makefile output $SHA512SUM.
+integrity "b42c647fe48a148788dba6241fd5edc8b493260b7fefa0ab56d488026fcb2d71b73d285226e8101f40ecf810773fab4e92c1039caf26b7dd782129c157cb91ee" "Makefile"
+integrity "6352a4b9d369371d979f4fb982236dfb5ff53a9f617848cee167a49dc76c5ca7ad0cf76ef8fe91585bb4359a189c3afc092dfe75c3161db45469d392d3526b16" "src/main-test.c"
+integrity "c4e27ff1c616c271732c6c443a5148cf88ff63ba1c0feb2b51fbb73bab903afc4aa07c04f1b847970f9ddeca8221a81235df9a3e8f94aa0fda9a78001dc9ca9f" "src/algo.h"
+integrity "dc1b2049bb854627a1321610c5d956871db2c039bfd73a1a2ef64aa5044ee83120b4e345f2c9c6b6ab35256e48d1a539b46205b89653330aa5f7abba21d3cd52" "src/util.h"
+integrity "45f69fceba143d801db64027e2d8d8dbb2a1813d6898c1e3c1dce2ffb53e3ef40fe836fdf5a688f843af7c4bf9f8adafe9451275824ab845fc2544730adf2da2" "src/util.c"
 
-[[ $SHA512SUM_ORIGIN = $SHA512SUM_CALCULATED ]] && success "Makefile ok" || err "Makefile modified. Exiting"
 
 info "Set DEBUG to 0 -- as I asked you to do (so the execution is faster as there should not be any printf() execution)"
 sed -i 's/#define\( *\)DEBUG\( *\)1/#define DEBUG 0/g' ./src/util.h
