@@ -39,8 +39,8 @@ int main (int argc, char *argv[])
     for (int generation = 0; generation < number_of_generations; generation++)
     {
         int pivot = adaptation_and_selection (population_size, population, distances);
-        reproduction (population_size, population, distances, pivot);
-        mutation (population_size, population, distances, MUTATION_PROB);
+        reproduction (population_size, population, pivot);
+        mutation (population_size, population, MUTATION_PROB);
         if (DEBUG) {
             display_best (population_size, population, distances, town_names);
         }
