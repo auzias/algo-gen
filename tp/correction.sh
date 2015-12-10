@@ -37,7 +37,7 @@ cd tp
 # Check the integrity of the files: `sha512sum Makefile` of the unmodified Makefile output $SHA512SUM.
 integrity "b42c647fe48a148788dba6241fd5edc8b493260b7fefa0ab56d488026fcb2d71b73d285226e8101f40ecf810773fab4e92c1039caf26b7dd782129c157cb91ee" "Makefile"
 integrity "b6e678ba412e1f48edd39c51b3480e604d7ae11a621709e404d1f2826aa52e12de6f95196fc6e9aaaa6f7838ddd19ce99805bd7b43b2079ea8d29ecf24153664" "src/main-test.c"
-integrity "c4e27ff1c616c271732c6c443a5148cf88ff63ba1c0feb2b51fbb73bab903afc4aa07c04f1b847970f9ddeca8221a81235df9a3e8f94aa0fda9a78001dc9ca9f" "src/algo.h"
+integrity "1e7ab9b4640f4ddf970ad8e1b48dfde9cac45ee633a1a4343fd878031d4ddd2987b6da7753585108b26a3131def7a3930e644ad9c4e9788acfb01bd25121521b" "src/algo.h"
 integrity "dc1b2049bb854627a1321610c5d956871db2c039bfd73a1a2ef64aa5044ee83120b4e345f2c9c6b6ab35256e48d1a539b46205b89653330aa5f7abba21d3cd52" "src/util.h"
 integrity "45f69fceba143d801db64027e2d8d8dbb2a1813d6898c1e3c1dce2ffb53e3ef40fe836fdf5a688f843af7c4bf9f8adafe9451275824ab845fc2544730adf2da2" "src/util.c"
 
@@ -46,6 +46,7 @@ info "Set DEBUG to 0 -- as I asked you to do (so the execution is faster as ther
 sed -i 's/#define\( *\)DEBUG\( *\)1/#define DEBUG 0/g' ./src/util.h
 
 info "Clear the binaries (that should not be here) and produce them using the source code"
-make clean && make test && success "Compilation ok" || err "Error(s) in compilation. Exiting"
+make clean
+make test && success "Compilation ok" || err "Error(s) in compilation. Exiting"
 
 time ./projet-test.bin $POPULATION_SIZE $GENERATION
